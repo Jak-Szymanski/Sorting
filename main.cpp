@@ -1,5 +1,6 @@
 #include "package.h"
 #include "sort.h"
+#include "comparator.h"
 #include <fstream>
 #include <iostream>
 #include <sstream> 
@@ -8,6 +9,7 @@
 
 int main(){
 
+    Comparator cmp;
     const int tab_size = 10;
     std::string line;
     std::ifstream file("dane.csv");
@@ -32,7 +34,7 @@ int main(){
         
     }
 
-    MergeSort(data, 0, tab_size-1);
+    MergeSort(data, 0, tab_size-1, cmp);
     //bruh(data);
     for(int i=0; i<tab_size; i++){
         std::cout << data[i];

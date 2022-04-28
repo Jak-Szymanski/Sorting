@@ -1,10 +1,11 @@
 #include "sort.h"
 
+
 /* void SetUpMergeSort(Package *arr[]){
     MergeSort(arr,0,sizeof(*arr) - 1);
 } */
 
-void MergeSort(Package arr[], int start, int end){
+void MergeSort(Package arr[], int start, int end, Comparator cmp){
 
 
     int pivot;
@@ -12,9 +13,9 @@ void MergeSort(Package arr[], int start, int end){
         //std::cout << "elo" << std::endl;
         pivot = (start + end)/2;
       //  std::cout << pivot << std::endl;
-        MergeSort(arr, start, pivot);
-        MergeSort(arr, pivot+1, end);
-        Merge(arr, start, pivot, end);
+        MergeSort(arr, start, pivot, cmp);
+        MergeSort(arr, pivot+1, end, cmp);
+        Merge(arr, start, pivot, end, cmp);
     }
 }
 
@@ -63,7 +64,7 @@ void MergeSort(Package arr[], int start, int end){
 
 } */
 
-void Merge(Package arr[], int start, int pivot, int end){
+void Merge(Package arr[], int start, int pivot, int end, Comparator cmp){
     int n1 = pivot - start +1;
     int n2 = end - pivot;
 
@@ -82,7 +83,7 @@ void Merge(Package arr[], int start, int pivot, int end){
     int k=start;
 
     while(i<n1 && j<n2){
-        if(L[i] <= M[j]){
+        if(cmp(L[i], M[j])){
             arr[k] = L[i];
             i++;
         } else {
