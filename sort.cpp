@@ -99,7 +99,7 @@ void Merge(Package arr[], int start, int pivot, int end, Comparator cmp){
         k++;
     }
     while(j<n2){
-        arr[k] = L[j];
+        arr[k] = M[j];
         j++;
         k++;
     }
