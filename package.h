@@ -17,9 +17,11 @@ class Package{
 
         Package(std::string message, int key);
 
-        int GetKey(){return Key;};
+        int GetKey() const{return Key;};
 
-        void Print();
+        std::string GetMessage() const{return Message;};
 
-        bool operator < (Package pack){return this->Key < pack.Key;};
+        bool operator <= (Package pack){return this->Key <= pack.Key;};
 };
+
+std::ostream &operator << (std::ostream &out, Package const &pack);

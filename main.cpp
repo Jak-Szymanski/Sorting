@@ -33,7 +33,8 @@ int main(){
     }
 
     MergeSort(data, 0, tab_size-1);
+    //bruh(data);
     for(int i=0; i<tab_size; i++){
-        data[i].Print();
+        std::cout << data[i];
     }
 }

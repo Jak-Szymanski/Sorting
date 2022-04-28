@@ -10,7 +10,8 @@ Package::Package(std::string message, int key){
     Key = key;
 }
 
-void Package::Print(){
 
-  std::cout << "Tytul: " << Message << " Ranking: " << Key << std::endl;
+std::ostream &operator << (std::ostream &out, Package const &pack){
+  out << "Tytul: " << pack.GetMessage() << " Ranking: " << pack.GetKey() << std::endl;
+  return out;
 }

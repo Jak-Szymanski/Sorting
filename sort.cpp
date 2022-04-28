@@ -6,38 +6,38 @@
 
 void MergeSort(Package arr[], int start, int end){
 
+
     int pivot;
-    if (start != end){
+    if (start < end){
         //std::cout << "elo" << std::endl;
         pivot = (start + end)/2;
+      //  std::cout << pivot << std::endl;
         MergeSort(arr, start, pivot);
         MergeSort(arr, pivot+1, end);
         Merge(arr, start, pivot, end);
-
-    } else {
-        //std::cout << "bruh" << std::endl;
     }
-
 }
 
-void Merge(Package arr[], int start, int pivot, int end){
+/* void Merge(Package arr[], int start, int pivot, int end){
 
     std::cout << "bruh" << std::endl;
-    Package *tmp_arr = new Package[end - start];
+    Package *tmp_arr = new Package[(end - start)];
     int i = start;
-    int j = pivot;
+    int j = pivot+1;
     int k = 0;
 
     while (i <= pivot && j <= end){
         if (arr[i] < arr[j]){
             tmp_arr[k] = arr[j];
-            tmp_arr[k].Print();
+            std::cout << tmp_arr[k];
             j++;
         } else{
             tmp_arr[k] = arr[i];
+            std::cout << tmp_arr[k];
             i++;
         }
-        k++;
+        k++;            arr[k] = M[j];
+            j++;
     }
 
     if(i <= pivot){
@@ -56,9 +56,50 @@ void Merge(Package arr[], int start, int pivot, int end){
 
     for(i = 0; i <= end-start; i++){
         arr[i] = tmp_arr[i];
-        arr[i].Print();
+        std::cout << arr[i];
     }
 
     std::cout << "merge" << std::endl;
 
+} */
+
+void Merge(Package arr[], int start, int pivot, int end){
+    int n1 = pivot - start +1;
+    int n2 = end - pivot;
+
+    Package *L = new Package[n1];
+    Package *M = new Package [n2];
+
+    for (int i=0; i<n1; i++){
+        L[i] = arr[start + i];
+    }
+    for(int j=0; j<n2; j++){
+        M[j] = arr[pivot + 1 +j];
+    }
+
+    int i=0;
+    int j=0;
+    int k=start;
+
+    while(i<n1 && j<n2){
+        if(L[i] <= M[j]){
+            arr[k] = L[i];
+            i++;
+        } else {
+            arr[k] = M[j];
+            j++;
+        }
+        k++;
+    }
+
+    while(i<n1){
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+    while(j<n2){
+        arr[k] = L[j];
+        j++;
+        k++;
+    }
 }
