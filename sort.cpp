@@ -1,106 +1,79 @@
 #include "sort.h"
 
 
-/* void SetUpMergeSort(Package *arr[]){
-    MergeSort(arr,0,sizeof(*arr) - 1);
+/* void bruh(Queue *S){
+    S->RemoveFirst();
 } */
 
-void MergeSort(Package arr[], int start, int end, Comparator cmp){
+void Divide(Queue S, Queue *S1, Queue *S2, int n){         
 
+    if(n > S.Size()) return;
+    Package tmp;
 
-    int pivot;
-    if (start < end){
-        //std::cout << "elo" << std::endl;
-        pivot = (start + end)/2;
-      //  std::cout << pivot << std::endl;
-        MergeSort(arr, start, pivot, cmp);
-        MergeSort(arr, pivot+1, end, cmp);
-        Merge(arr, start, pivot, end, cmp);
+    for(int i=0; i<n; i++){
+        tmp = S.RemoveFirst();
+        //std::cout << "1    " << tmp;
+        S1->InsertEnd(tmp);
+    }
+    while(!S.IsEmpty()){
+        tmp = S.RemoveFirst();
+        //std::cout << "2     " << tmp;
+        S2->InsertEnd(tmp);
     }
 }
 
-/* void Merge(Package arr[], int start, int pivot, int end){
+void MergeSort(Queue *S, Comparator C){
 
-    std::cout << "bruh" << std::endl;
-    Package *tmp_arr = new Package[(end - start)];
-    int i = start;
-    int j = pivot+1;
-    int k = 0;
+    Queue S1, S2;
+    int n = S->Size();
+    if (n > 1){
+        Divide(*S, &S1, &S2, n/2);
+        MergeSort(&S1, C);
+        MergeSort(&S2, C);
+        Merge(S, S1, S2);
+    } 
 
-    while (i <= pivot && j <= end){
-        if (arr[i] < arr[j]){
-            tmp_arr[k] = arr[j];
-            std::cout << tmp_arr[k];
-            j++;
-        } else{
-            tmp_arr[k] = arr[i];
-            std::cout << tmp_arr[k];
-            i++;
-        }
-        k++;            arr[k] = M[j];
-            j++;
-    }
+}
 
-    if(i <= pivot){
-        while(i <= pivot){
-            tmp_arr[k] = arr[i];
-            i++;
-            k++;
-        }
-    } else {
-        while(j <= end){
-            tmp_arr[k] = arr[j];
-            j++;
-            k++;
-        }
-    }
+/* void QuickSort(Package arr[], int start, int end, Comparator cmp){
 
-    for(i = 0; i <= end-start; i++){
-        arr[i] = tmp_arr[i];
-        std::cout << arr[i];
-    }
+    srand(time(NULL));
+    if(start < end){
+        int pivot = rand() % (end - start);
+        std::cout << pivot << std::endl;
+        QuickSort(arr, start, start+pivot, cmp);
+        QuickSort(arr, start+pivot+1, end, cmp);
+        Merge(arr, start, pivot, end, cmp); 
+    }   
+}
 
-    std::cout << "merge" << std::endl;
+void Partition(Package arr[], int pivot){
 
 } */
 
-void Merge(Package arr[], int start, int pivot, int end, Comparator cmp){
-    int n1 = pivot - start +1;
-    int n2 = end - pivot;
 
-    Package *L = new Package[n1];
-    Package *M = new Package [n2];
+void Merge(Queue *S, Queue S1, Queue S2){
 
-    for (int i=0; i<n1; i++){
-        L[i] = arr[start + i];
-    }
-    for(int j=0; j<n2; j++){
-        M[j] = arr[pivot + 1 +j];
-    }
-
-    int i=0;
-    int j=0;
-    int k=start;
-
-    while(i<n1 && j<n2){
-        if(cmp(L[i], M[j])){
-            arr[k] = L[i];
-            i++;
+    Package tmp;
+    while(!S1.IsEmpty() && !S2.IsEmpty()){
+        if(S1.GetHead()->GetKey() <= S2.GetHead()->GetKey()){
+            tmp = S1.RemoveFirst();
+            std::cout << "1:   " << tmp;
+            S->InsertEnd(tmp);
         } else {
-            arr[k] = M[j];
-            j++;
+            tmp = S2.RemoveFirst();
+            std::cout << "2:   " << tmp;
+            S->InsertEnd(tmp);
         }
-        k++;
     }
-
-    while(i<n1){
-        arr[k] = L[i];
-        i++;
-        k++;
+    while(!S1.IsEmpty()){
+            tmp = S1.RemoveFirst();
+            std::cout << "1:   " << tmp;
+            S->InsertEnd(tmp); 
     }
-    while(j<n2){
-        arr[k] = M[j];
-        j++;
-        k++;
+    while(!S2.IsEmpty()){
+            tmp = S2.RemoveFirst();
+            std::cout << "2:   " << tmp;
+            S->InsertEnd(tmp);
     }
 }

@@ -1,4 +1,4 @@
-#include "package.h"
+#include "queue.h"
 #include "sort.h"
 #include "comparator.h"
 #include <fstream>
@@ -19,7 +19,7 @@ int main(){
     std::string name;
     int rank;
     std::string temp;
-    Package *data = new Package[tab_size];
+    Queue data;
 
     for(int i = 0 ; i < tab_size ; i++){
         getline(file, line);
@@ -30,13 +30,17 @@ int main(){
         std::getline(iss, temp);
         rank = stoi(temp);
 
-        data[i] = Package(name, rank);
+        data.InsertEnd(Package(name, rank));
         
     }
+        Queue S1, S2;
+        Divide(data,&S1,&S2,6);
+/*         std::cout << "S1" << std::endl << S1;
+        std::cout << "S2" << std::endl << S2; */
+        Merge(&data,S1,S2);
 
-    MergeSort(data, 0, tab_size-1, cmp);
-    //bruh(data);
-    for(int i=0; i<tab_size; i++){
-        std::cout << data[i];
-    }
-}
+        //MergeSort(&data, cmp);
+        std::cout << "S1" << std::endl << S1;
+        std::cout << data;
+        std::cout << data.Size();
+ }

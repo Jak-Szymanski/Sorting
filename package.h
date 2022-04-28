@@ -22,6 +22,8 @@ class Package{
         std::string GetMessage() const{return Message;};
 
         bool operator <= (Package pack){return this->Key <= pack.Key;};
+
+        friend class Node;
 };
 
 std::ostream &operator << (std::ostream &out, Package const &pack);

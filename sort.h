@@ -1,6 +1,10 @@
 #pragma once
-#include "package.h"
+#include "queue.h"
 #include "comparator.h"
 
-void MergeSort(Package arr[], int start, int end, Comparator cmp);
-void Merge(Package arr[], int start, int pivot, int end, Comparator cmp);
+void MergeSort(Queue *S, Comparator C);
+void Divide(Queue S, Queue *S1, Queue *S2, int n);
+/* void QuickSort(Package arr[], int start, int end, Comparator cmp);
+void Partition(Package arr[], int pivot); */
+void Merge(Queue *S, Queue S1, Queue S2);
+//void bruh(Queue *S);
