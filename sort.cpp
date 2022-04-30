@@ -1,11 +1,6 @@
 #include "sort.h"
 
 
-/* void bruh(Queue S, Queue *S1){
-    Package tmp;
-    tmp = S.RemoveFirst();
-    S1->InsertEnd(tmp);
-} */
 
 void Divide(Queue *S, Queue *S1, Queue *S2, int n){         
 
