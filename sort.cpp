@@ -19,32 +19,18 @@ void Divide(Queue *S, Queue *S1, Queue *S2, int n){
     }
 }
 
-void MergeSort(Queue *S, Comparator C){
+void MergeSort(Queue *S){
 
     Queue S1, S2;
     int n = S->Size();
     if (n > 1){
         Divide(S, &S1, &S2, n/2);
-        MergeSort(&S1, C);
-        MergeSort(&S2, C);
+        MergeSort(&S1);
+        MergeSort(&S2);
         Merge(S, S1, S2);
     } 
 
 }
-
-/* void QuickSort(Package arr[], int start, int end, Comparator cmp){
-
-    srand(time(NULL));
-    if(start < end){
-        int pivot = rand() % (end - start);
-        std::cout << pivot << std::endl;
-        QuickSort(arr, start, start+pivot, cmp);
-        QuickSort(arr, start+pivot+1, end, cmp);
-        Merge(arr, start, pivot, end, cmp); 
-    }   
-}
-
-*/
 
 
 void Merge(Queue *S, Queue S1, Queue S2){
@@ -93,6 +79,7 @@ void Add(Queue *S, Queue *L, Queue *E, Queue *G){
 }
 
 void QuickSort(Queue *S){
+
     srand(time(NULL));
     int size = S->Size();
     int p;
@@ -103,5 +90,21 @@ void QuickSort(Queue *S){
         QuickSort(&L);
         QuickSort(&G);
         Add(S,&L,&E,&G);
+    }
+}
+
+void BucketSort(Queue *S, int N){
+    
+    Queue *B = new Queue[N];
+    Package tmp;
+
+    while(!S->IsEmpty()){
+        tmp = S->RemoveFirst();
+        B[tmp.GetKey()].InsertEnd(tmp);
+    }
+    for(int i=0;i<=N-1;i++){
+        while(!B[i].IsEmpty()){
+            S->InsertEnd(B[i].RemoveFirst());
+        }
     }
 }

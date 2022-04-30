@@ -10,7 +10,7 @@
 int main(){
 
     Comparator cmp;
-    const int tab_size = 13;
+    const int tab_size = 10;
     std::string line;
     std::ifstream file("dane.csv");
     if(!file.is_open()) throw std::runtime_error("Could not open file");
@@ -34,7 +34,8 @@ int main(){
         
     }
 
-        QuickSort(&data);
+        //MergeSort(&data);
+        //BucketSort(&data,11);
         std::cout << "data" << std::endl << data;
 
 /*         Queue L,E,G;
