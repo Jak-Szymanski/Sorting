@@ -3,6 +3,7 @@
 
 Queue::Queue(){
   Head = NULL;  
+  Tail = NULL;
 }
 
 void Queue::InsertFront(Package new_pack){
@@ -67,7 +68,7 @@ std::ostream &operator << (std::ostream &out, Queue const &queue){
 
 Package Queue::RemoveFirst(){
 
-  if(!Head){
+  if(IsEmpty()){
     throw "Proba usuniecia elementu z pustej kolejki!";
   }
 
@@ -85,7 +86,7 @@ Package Queue::RemoveFirst(){
 
 Package Queue::RemoveLast(){
 
-  if(!Head){
+  if(IsEmpty()){
     throw "Proba usuniecia elementu z pustej kolejki!";
   }
 
@@ -100,6 +101,35 @@ Package Queue::RemoveLast(){
 
   delete ptr;
   return last;
+}
+
+Package Queue::Remove(int n){
+  if(IsEmpty()){
+    throw "Próba usunięcia elementu z pustej kolejki!";
+  }
+  if(n < 0){
+    throw "Próba usunięcia nieistniejącego elementu!";
+  }
+  if (n==0){
+    return RemoveFirst();
+  }
+
+  Node *ptr = Head;
+  for(int i=0; i<n-1; i++){
+    if(ptr->Next == NULL){
+      throw "Próba usunięcia nieistniejącego elementu!";
+    }
+    ptr = ptr->Next;
+  }
+  Package pack = ptr->Next->Elem;
+  if(ptr->Next->Next == NULL){
+    Tail = ptr;
+    ptr->Next = NULL;
+  } else {
+  ptr->Next->Next->Prev = ptr->Next;
+  ptr->Next = ptr->Next->Next;
+  }
+  return pack;
 }
 
 void Queue::Delete(){

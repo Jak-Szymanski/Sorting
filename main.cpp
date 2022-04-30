@@ -10,7 +10,7 @@
 int main(){
 
     Comparator cmp;
-    const int tab_size = 10;
+    const int tab_size = 13;
     std::string line;
     std::ifstream file("dane.csv");
     if(!file.is_open()) throw std::runtime_error("Could not open file");
@@ -33,14 +33,18 @@ int main(){
         data.InsertEnd(Package(name, rank));
         
     }
-        Queue S1, S2;
-        Divide(data,&S1,&S2,6);
-/*         std::cout << "S1" << std::endl << S1;
-        std::cout << "S2" << std::endl << S2; */
-        Merge(&data,S1,S2);
 
-        //MergeSort(&data, cmp);
-        std::cout << "S1" << std::endl << S1;
-        std::cout << data;
-        std::cout << data.Size();
+        QuickSort(&data);
+        std::cout << "data" << std::endl << data;
+
+/*         Queue L,E,G;
+        Partition(&data,12,&L,&E,&G);
+        std::cout << "data" << std::endl << data;
+        std::cout << "L" << std::endl << L;
+        std::cout << "E" << std::endl << E;
+        std::cout << "G" << std::endl << G;
+        Add(&data,&L,&E,&G);
+        std::cout << "data" << std::endl << data; */
+
+
  }

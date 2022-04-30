@@ -23,6 +23,12 @@ class Package{
 
         bool operator <= (Package pack){return this->Key <= pack.Key;};
 
+        bool operator < (Package pack){return this->Key < pack.Key;};
+
+        bool operator == (Package pack){return this->Key == pack.Key;};
+
+        bool operator > (Package pack){return this->Key > pack.Key;};
+
         friend class Node;
 };
 

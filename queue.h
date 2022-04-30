@@ -23,6 +23,8 @@ class Queue{
 
     Package RemoveLast();
 
+    Package Remove(int n);
+
     int Size() const;
 
     void Delete();
