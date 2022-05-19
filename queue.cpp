@@ -6,10 +6,10 @@ Queue::Queue(){
   Tail = NULL;
 }
 
+/* Wstaw nowy element na początek kolejki*/
 void Queue::InsertFront(Package new_pack){
 
   Node *tmp = new Node(new_pack);
-
   
   tmp->Next = Head;
   if (IsEmpty()){ 
@@ -18,9 +18,9 @@ void Queue::InsertFront(Package new_pack){
     tmp->Next->Prev = tmp;
   }
   Head = tmp;
-
 }
 
+/* Wstaw nowy element na koniec kolejki */
 void Queue::InsertEnd(Package new_pack){
 
   Node *tmp = new Node(new_pack);
@@ -34,6 +34,7 @@ void Queue::InsertEnd(Package new_pack){
   Tail = tmp;
 }
 
+/* Zwróć rozmiar kolejki */
 int Queue::Size() const{
 
   if(IsEmpty()) return 0;
@@ -49,7 +50,7 @@ int Queue::Size() const{
   return size;
 }
 
-
+/* Wyświetlanie kolejki */
 std::ostream &operator << (std::ostream &out, Queue const &queue){
 
   if(queue.IsEmpty()){
@@ -57,15 +58,16 @@ std::ostream &operator << (std::ostream &out, Queue const &queue){
     return out;
   }
 
-  Node *tmp = queue.GetHead();
-  while(tmp->GetNext() != NULL){
-    out << tmp->GetElem();
-    tmp = tmp->GetNext();
+  Node *ptr = queue.GetHead();
+  while(ptr->GetNext() != NULL){
+    out << ptr->GetElem();
+    ptr = ptr->GetNext();
   }
-  out << tmp->GetElem(); 
+  out << ptr->GetElem(); 
   return out;
 }
 
+/* Usuń i zwróć pierwszy element */
 Package Queue::RemoveFirst(){
 
   if(IsEmpty()){
@@ -80,10 +82,10 @@ Package Queue::RemoveFirst(){
   } else {
     Tail = NULL;
   }
-  delete ptr;
   return first;
 }
 
+/* Usuń i zwróć ostatni element */
 Package Queue::RemoveLast(){
 
   if(IsEmpty()){
@@ -98,11 +100,10 @@ Package Queue::RemoveLast(){
   } else {
     Head = NULL;
   }
-
-  delete ptr;
   return last;
 }
 
+/* Usuń i zwróć n-ty element */
 Package Queue::Remove(int n){
   if(IsEmpty()){
     throw "Próba usunięcia elementu z pustej kolejki!";
@@ -132,6 +133,7 @@ Package Queue::Remove(int n){
   return pack;
 }
 
+/* Wyczyść całą kolejkę */
 void Queue::Delete(){
 
   Node *ptr = Head;
@@ -145,6 +147,8 @@ void Queue::Delete(){
   }
 }
 
+/* Wyświetl całą kolejkę idąc od końca
+(funkcja była używana jedynie do testów poprawności działania kolejki w obu kierunkach) */
 void Queue::PrintEnd(){
 
   if(IsEmpty()){
@@ -158,4 +162,80 @@ void Queue::PrintEnd(){
     tmp = tmp->GetPrev();
   }
   std::cout << tmp->GetElem(); 
+}
+
+/* Operator kopiowania */
+Queue &Queue::operator = (const Queue &other){
+
+  if (this == &other) return *this;
+
+  Delete();
+
+  Node *tmp = other.GetHead();
+ while(tmp->Next != NULL) {
+    InsertEnd(tmp->Elem);
+    tmp = tmp->Next;
+  } 
+  InsertEnd(tmp->Elem);
+  return *this;
+}
+
+/* Czy kolejka jest posortowana */
+bool Queue::IsSorted() const {
+  if (IsEmpty()) return true;
+
+  Node *ptr = Head;
+  int tmp = ptr->GetKey();
+  while(ptr->Next != NULL){
+    if (ptr->Next->GetKey() < tmp) return false;
+    ptr = ptr->Next;
+    tmp = ptr->GetKey();
+  }
+  return true;
+}
+
+/* Zwróć średnią wartość ocen w kolejce */
+double Queue::Average() const{
+
+  if (IsEmpty()) return 0.0;
+  Node *ptr = Head;
+  double avg = 0.0;
+  int size = 0;
+  
+
+  while(ptr != NULL){
+    avg += ptr->GetKey();
+    size++;
+    ptr = ptr->GetNext();
+    
+  }
+  return avg/size;
+}
+
+/* Zwróć medianę wartości ocen w kolejce */
+double Queue::Median() const{
+
+  if (IsEmpty()) return 0; 
+
+  Node *ptr;
+  int size = Size();
+
+  if(size == 1) return Head->GetKey();
+  int n = size/2;
+
+  if(!IsSorted()){
+    Queue tmp;
+    tmp = *this;
+    BucketSort(&tmp,10);
+    ptr = tmp.GetHead();
+  } else {
+    ptr = GetHead();
+  }
+ 
+  for(int i=0;i<n-1;i++){
+    ptr = ptr->Next;
+  }
+
+  if(size%2 == 0) return (ptr->GetKey() + ptr->Next->GetKey())/2.0;
+  else return ptr->Next->GetKey();
 }

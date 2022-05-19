@@ -35,8 +35,6 @@ class Node{
 
     void SetPrev(Node *new_prev){Prev = new_prev;};
 
-    //void ClearNext(){Next = NULL;};
-
 
     friend class Queue;
 
