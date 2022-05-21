@@ -3,20 +3,10 @@
 /* -------------------------------------------------------------------------------------*/
 /*-----------------------Funkcje sortowania przez scalanie: */
 
-/* Posortuj S algorytmem mergesort */
-void MergeSort(Queue *S){
-    Queue S1, S2;
-    int n = S->Size();
-    if (n > 1){
-        Divide(S, &S1, &S2, n/2);
-        MergeSort(&S1);
-        MergeSort(&S2);
-        Merge(S, S1, S2);
-    } 
-}
+
 
 /* Podziel kolejkę S na kolejkę S1 zawierającą pierwsze n elementów oraz S2 zawierającą resztę */
-void Divide(Queue *S, Queue *S1, Queue *S2, int n){         
+void Divide(Dequeue *S, Dequeue *S1, Dequeue *S2, int n){         
 
     for(int i=0; i<n; i++){
         S1->InsertEnd(S->RemoveFirst());    //wstaw do S1
@@ -27,7 +17,7 @@ void Divide(Queue *S, Queue *S1, Queue *S2, int n){
 }
 
 /*Scal w sposób posortowany S1 i S2 do S (zakładamy że S1 i S2 są same w sobie posortowane*/
-void Merge(Queue *S, Queue S1, Queue S2){
+void Merge(Dequeue *S, Dequeue S1, Dequeue S2){
 
     while(!S1.IsEmpty() && !S2.IsEmpty()){      //wstawiaj po kolej mniejszy element z danej pary (S1 vs S2)
         if(S1.GetHead()->GetKey() <= S2.GetHead()->GetKey()){
@@ -44,18 +34,30 @@ void Merge(Queue *S, Queue S1, Queue S2){
     }
 }
 
+/* Posortuj S algorytmem mergesort */
+void MergeSort(Dequeue *S){
+    Dequeue S1, S2;
+    int n = S->Size();
+    if (n > 1){
+        Divide(S, &S1, &S2, n/2);
+        MergeSort(&S1);
+        MergeSort(&S2);
+        Merge(S, S1, S2);
+    } 
+}
+
 
 
 /* -------------------------------------------------------------------------------------*/
 /*-----------------------Funkcje sortowania szybkiego: */
 
 /* Posortuj S algorytmem quicksort */
-void QuickSort(Queue *S){
+void QuickSort(Dequeue *S){
 
     srand(time(NULL));
     int size = S->Size();
     int p;
-    Queue L,E,G;
+    Dequeue L,E,G;
     if (size > 1){
         p = rand() % size;      //weż losowy element z S
         Partition(S,p,&L,&E,&G);
@@ -66,7 +68,7 @@ void QuickSort(Queue *S){
 }
 
 /* Podziel kolejkę S na elementy mniejsze (L), równe (E) i większe (G) od p-tego elementu kolejki S */
-void Partition(Queue *S, int p, Queue *L, Queue *E, Queue *G){
+void Partition(Dequeue *S, int p, Dequeue *L, Dequeue *E, Dequeue *G){
     Package x,y;
     x = S->Remove(p);
     E->InsertEnd(x);
@@ -83,7 +85,7 @@ void Partition(Queue *S, int p, Queue *L, Queue *E, Queue *G){
 }
 
 /* Połącz L, E i G do S (w takiej kolejności) */
-void Add(Queue *S, Queue *L, Queue *E, Queue *G){
+void Add(Dequeue *S, Dequeue *L, Dequeue *E, Dequeue *G){
     while(!L->IsEmpty()){
         S->InsertEnd(L->RemoveFirst());
     }
@@ -100,9 +102,9 @@ void Add(Queue *S, Queue *L, Queue *E, Queue *G){
 /*-----------------------Funkcje sortowania kubełkowego: */
 
 /* Posortuj S algorytmem kubełkowym (gdzie wartości mieszczą się w przedziale 1-N) */
-void BucketSort(Queue *S, int N){
+void BucketSort(Dequeue *S, int N){
     
-    Queue *B = new Queue[N+1];
+    Dequeue *B = new Dequeue[N+1];
     Package tmp;
 
     while(!S->IsEmpty()){                   //wstaw elementy z S do odpowiedniej komórki tablicy

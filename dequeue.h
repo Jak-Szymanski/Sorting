@@ -4,7 +4,7 @@
 #include "sort.h"
 #define PACK_LENGTH 5
 
-class Queue{
+class Dequeue{
 
   private:
   
@@ -14,7 +14,7 @@ class Queue{
 
   public:
 
-    Queue();
+    Dequeue();
 
     void InsertFront(Package new_pack);
 
@@ -44,12 +44,12 @@ class Queue{
 
     void PrintEnd();
 
-    Queue &operator = (const Queue &other);
+    Dequeue &operator = (const Dequeue &other);
 
     double Average() const;
 
     double Median() const;
 };
 
-std::ostream &operator << (std::ostream &out, Queue const &queue);
+std::ostream &operator << (std::ostream &out, Dequeue const &queue);
 

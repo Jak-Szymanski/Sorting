@@ -1,4 +1,4 @@
-#include "queue.h"
+#include "dequeue.h"
 #include "sort.h"
 #include <fstream>
 #include <iostream>
@@ -14,7 +14,7 @@ n - ilość filmów które mają być wczytane
 data - docelowa kolejka
 Zwraca:
 Czas w jakim funkcja się wykonała w microsekundach */
-int LoadFromFile(std::string filename, int n, Queue *data){
+int LoadFromFile(std::string filename, int n, Dequeue *data){
 
     auto start = std::chrono::steady_clock::now();
     std::string line;
@@ -52,7 +52,7 @@ type - rodzaj algorytmu sortowania (1/2/3)
 data - kolejka z danymi do sortowania
 Zwraca:
 Czas w jakim funkcja się wykonała w microsekundach */
-int Sort(int type, Queue *data){
+int Sort(int type, Dequeue *data){
 
         auto start = std::chrono::steady_clock::now();
         switch(type){
@@ -75,7 +75,7 @@ int Sort(int type, Queue *data){
  
 int main(){
 
-    Queue data, tmp;
+    Dequeue data, tmp;
     std::ofstream outputfile;
     
     //----TEST O() MERGESORT------
@@ -100,7 +100,7 @@ int main(){
     //----DOKŁADNIEJSZY TEST O() QUICKSORT------
 
 /*     outputfile.open("quick2.csv");
-    Queue tmp;
+    Dequeue tmp;
     for(int i=40000; i<=40000;i+=8000){
         LoadFromFile("dane.csv", i, &data);
         for(int j=0; j<50; j++){
@@ -138,21 +138,45 @@ int main(){
     data.Delete();  */
 
 /*     outputfile.open("test.csv");
-    outputfile << "n,loading time[us],mergesort time[us],quicksort time[us],bucketsort time[us],average rating, median rating" << std::endl;
+    outputfile << "n,wczytywanie danych[us],mergesort[us],quicksort[us],bucketsort[us],średnia ocena, mediana ocen" << std::endl;
     int tab[6] = {10000,50000,100000,200000,300000,400000};
     for(int j=0; j<6;j++){
         outputfile << tab[j] << "," << LoadFromFile("dane.csv",tab[j],&data) << ",";
         tmp = data;
-        //std::cout << tmp << std::endl;
-        outputfile << Sort(1,&tmp) << ",";
-        tmp = data;
         outputfile << Sort(2,&tmp) << ",";
+        tmp = data;
+        outputfile << Sort(1,&tmp) << ",";
         tmp = data;
         outputfile << Sort(3,&tmp) << "," ;
         outputfile << std::setprecision(3) << tmp.Average()<< "," ;
         outputfile << tmp.Median() << std::endl;
         data.Delete();
-        tmp.Delete();
+       tmp.Delete();
     }
     outputfile.close(); */
+
+    LoadFromFile("dane.csv", 400000, &data);
+    std::cout << data.GetHead()->GetElem() << data.GetTail()->GetElem() << std::endl;
+    tmp = data;
+
+    std::cout << Sort(1,&tmp) << std::endl;
+
+
+/*     LoadFromFile("dane.csv", 400000, &data);
+    ;
+    tmp = data;
+    tmp.InsertFront(Package("bruh",2));
+    std::cout << data.GetHead()->GetElem() << data.GetTail()->GetElem();
+    std::cout << tmp.GetHead()->GetElem() << tmp.GetTail()->GetElem();
+
+    std::cout << data << std::endl;
+    Sort(1,&tmp);
+    
+   std::cout << data.IsSorted() << std::endl;
+    data.Delete();
+
+    LoadFromFile("dane.csv", 400000, &data);
+    std::cout << data.GetHead()->GetElem() << data.GetTail()->GetElem();
+    tmp = data;
+    std::cout << tmp.GetHead()->GetElem() << tmp.GetTail()->GetElem(); */
 }

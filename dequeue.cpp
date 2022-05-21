@@ -1,13 +1,13 @@
-#include "queue.h"
+#include "dequeue.h"
 
 
-Queue::Queue(){
+Dequeue::Dequeue(){
   Head = NULL;  
   Tail = NULL;
 }
 
 /* Wstaw nowy element na początek kolejki*/
-void Queue::InsertFront(Package new_pack){
+void Dequeue::InsertFront(Package new_pack){
 
   Node *tmp = new Node(new_pack);
   
@@ -21,7 +21,7 @@ void Queue::InsertFront(Package new_pack){
 }
 
 /* Wstaw nowy element na koniec kolejki */
-void Queue::InsertEnd(Package new_pack){
+void Dequeue::InsertEnd(Package new_pack){
 
   Node *tmp = new Node(new_pack);
 
@@ -35,7 +35,7 @@ void Queue::InsertEnd(Package new_pack){
 }
 
 /* Zwróć rozmiar kolejki */
-int Queue::Size() const{
+int Dequeue::Size() const{
 
   if(IsEmpty()) return 0;
 
@@ -51,7 +51,7 @@ int Queue::Size() const{
 }
 
 /* Wyświetlanie kolejki */
-std::ostream &operator << (std::ostream &out, Queue const &queue){
+std::ostream &operator << (std::ostream &out, Dequeue const &queue){
 
   if(queue.IsEmpty()){
     out << "Kolejka jest pusta" << std::endl;
@@ -68,7 +68,7 @@ std::ostream &operator << (std::ostream &out, Queue const &queue){
 }
 
 /* Usuń i zwróć pierwszy element */
-Package Queue::RemoveFirst(){
+Package Dequeue::RemoveFirst(){
 
   if(IsEmpty()){
     throw "Proba usuniecia elementu z pustej kolejki!";
@@ -86,7 +86,7 @@ Package Queue::RemoveFirst(){
 }
 
 /* Usuń i zwróć ostatni element */
-Package Queue::RemoveLast(){
+Package Dequeue::RemoveLast(){
 
   if(IsEmpty()){
     throw "Proba usuniecia elementu z pustej kolejki!";
@@ -104,7 +104,7 @@ Package Queue::RemoveLast(){
 }
 
 /* Usuń i zwróć n-ty element */
-Package Queue::Remove(int n){
+Package Dequeue::Remove(int n){
   if(IsEmpty()){
     throw "Próba usunięcia elementu z pustej kolejki!";
   }
@@ -134,7 +134,7 @@ Package Queue::Remove(int n){
 }
 
 /* Wyczyść całą kolejkę */
-void Queue::Delete(){
+void Dequeue::Delete(){
 
   Node *ptr = Head;
   Node *next;
@@ -149,7 +149,7 @@ void Queue::Delete(){
 
 /* Wyświetl całą kolejkę idąc od końca
 (funkcja była używana jedynie do testów poprawności działania kolejki w obu kierunkach) */
-void Queue::PrintEnd(){
+void Dequeue::PrintEnd(){
 
   if(IsEmpty()){
     std::cout << "Kolejka jest pusta" << std::endl;
@@ -165,7 +165,7 @@ void Queue::PrintEnd(){
 }
 
 /* Operator kopiowania */
-Queue &Queue::operator = (const Queue &other){
+Dequeue &Dequeue::operator = (const Dequeue &other){
 
   if (this == &other) return *this;
 
@@ -181,7 +181,7 @@ Queue &Queue::operator = (const Queue &other){
 }
 
 /* Czy kolejka jest posortowana */
-bool Queue::IsSorted() const {
+bool Dequeue::IsSorted() const {
   if (IsEmpty()) return true;
 
   Node *ptr = Head;
@@ -195,7 +195,7 @@ bool Queue::IsSorted() const {
 }
 
 /* Zwróć średnią wartość ocen w kolejce */
-double Queue::Average() const{
+double Dequeue::Average() const{
 
   if (IsEmpty()) return 0.0;
   Node *ptr = Head;
@@ -213,7 +213,7 @@ double Queue::Average() const{
 }
 
 /* Zwróć medianę wartości ocen w kolejce */
-double Queue::Median() const{
+double Dequeue::Median() const{
 
   if (IsEmpty()) return 0; 
 
@@ -224,7 +224,7 @@ double Queue::Median() const{
   int n = size/2;
 
   if(!IsSorted()){
-    Queue tmp;
+    Dequeue tmp;
     tmp = *this;
     BucketSort(&tmp,10);
     ptr = tmp.GetHead();
