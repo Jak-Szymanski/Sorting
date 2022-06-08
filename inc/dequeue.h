@@ -1,7 +1,6 @@
 #pragma once
 
 #include "node.h"
-#include "sort.h"
 #define PACK_LENGTH 5
 
 class Dequeue{
@@ -50,6 +49,8 @@ class Dequeue{
 
     double Median() const;
 };
+
+void BucketSort(Dequeue *S, int N);
 
 std::ostream &operator << (std::ostream &out, Dequeue const &queue);
 

@@ -1,8 +1,6 @@
-#include "../inc/dequeue.h"
 #include "../inc/sort.h"
 #include <fstream>
-#include <iostream>
-#include <sstream> 
+#include <iostream> 
 #include <chrono>
 #include <iomanip> 
 
@@ -16,16 +14,21 @@ Zwraca:
 Czas w jakim funkcja się wykonała w microsekundach */
 int LoadFromFile(std::string filename, int n, Dequeue *data){
 
+	std::cout << "load";
     auto start = std::chrono::steady_clock::now();
+    std::cout << "start";
     std::string line;
-    std::ifstream file(filename);
+    std::cout << "line";
+    std::ifstream file;
+    std::cout << "file";
+    file.open(filename);
+    std::cout << "opening";
+    if (!file.is_open()) std::cout << "open";
     std::string name;
     int rank;
     std::string temp;
-    char tmp_char;
     int i = 0;
     int start_pos,end_pos;
-
     std::getline(file,line);
     while(i<n && !file.eof()){
         getline(file,line);
@@ -42,6 +45,7 @@ int LoadFromFile(std::string filename, int n, Dequeue *data){
     }
    
     auto end = std::chrono::steady_clock::now();
+    file.close();
     return std::chrono::duration_cast<std::chrono::microseconds>(end-start).count();
 }
 
@@ -80,19 +84,21 @@ int main(){
 
 
     outputfile.open("../dane/test.csv");
-    outputfile << "n,wczytywanie danych[us],mergesort[us],quicksort[us],bucketsort[us],średnia ocena, mediana ocen" << std::endl;
-    int tab[6] = {10000,50000,100000,200000,300000,400000};
-    for(int j=0; j<6;j++){
-        outputfile << tab[j] << "," << LoadFromFile("../dane/dane.csv",tab[j],&data) << ",";
+    std::cout << "n,wczytywanie danych[us],mergesort[us],quicksort[us],bucketsort[us],średnia ocena, mediana ocen" << std::endl;
+    int tab[6] = {10,50,100,200,300,400};
+    std::cout << "tab";
+    for(int i=0; i<6;i++){
+	    std::cout << tab[i] << ",";
+	    std::cout  << LoadFromFile("../dane/dane.csv",tab[i],&data) << ",";
         tmp = data;
-        outputfile << Sort(1,&tmp) << ",";
+	std::cout << Sort(1,&tmp) << ",";
         tmp = data;
-        outputfile << Sort(2,&tmp) << ",";
+       	std::cout << Sort(2,&tmp) << ",";
         tmp = data;
-        outputfile << Sort(3,&tmp) << "," ;
+	std::cout << Sort(3,&tmp) << "," ;
         tmp = data;
-        outputfile << std::setprecision(3) << tmp.Average()<< "," ;
-        outputfile << tmp.Median() << std::endl; 
+	std::cout << std::setprecision(3) << tmp.Average()<< "," ;
+       	std::cout << tmp.Median() << std::endl; 
         data.Delete();
         tmp.Delete();
     }

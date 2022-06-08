@@ -5,6 +5,8 @@
 #include <fstream> 
 #include <iostream>
 
+class Dequeue;
+
 class Node{
 
   private:
