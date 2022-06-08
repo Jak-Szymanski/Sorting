@@ -11,7 +11,7 @@ filename - nazwa pliku csv
 n - ilość filmów które mają być wczytane
 data - docelowa kolejka
 Zwraca:
-Czas w jakim funkcja się wykonała w microsekundach */
+Czas w jakim funkcja się wykonała w milisekundach */
 int LoadFromFile(std::string filename, int n, Dequeue *data){
 
     auto start = std::chrono::steady_clock::now();
@@ -40,7 +40,7 @@ int LoadFromFile(std::string filename, int n, Dequeue *data){
    
     auto end = std::chrono::steady_clock::now();
     file.close();
-    return std::chrono::duration_cast<std::chrono::microseconds>(end-start).count();
+    return std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count();
 }
 
 
@@ -49,7 +49,7 @@ Argumenty:
 type - rodzaj algorytmu sortowania (1/2/3)
 data - kolejka z danymi do sortowania
 Zwraca:
-Czas w jakim funkcja się wykonała w microsekundach */
+Czas w jakim funkcja się wykonała w milisekundach */
 int Sort(int type, Dequeue *data){
 
         auto start = std::chrono::steady_clock::now();
@@ -67,7 +67,7 @@ int Sort(int type, Dequeue *data){
             break;
         }
         auto end = std::chrono::steady_clock::now();
-        return std::chrono::duration_cast<std::chrono::microseconds>(end-start).count();
+        return std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count();
  }
 
  
@@ -78,7 +78,7 @@ int main(){
 
 
     outputfile.open("./dane/test.csv");
-    outputfile << "n,wczytywanie danych[us],mergesort[us],quicksort[us],bucketsort[us],średnia ocena, mediana ocen" << std::endl;
+    outputfile << "n,wczytywanie danych[ms],mergesort[ms],quicksort[ms],bucketsort[ms],średnia ocena, mediana ocen" << std::endl;
     int tab[6] = {10000,50000,100000,200000,300000,400000};
     for(int i=0; i<6;i++){
 	outputfile << tab[i] << ",";
