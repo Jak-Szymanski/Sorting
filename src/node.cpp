@@ -1,4 +1,4 @@
-#include "node.h"
+#include "../inc/node.h"
 
 Node::Node(){
   Elem = Package();

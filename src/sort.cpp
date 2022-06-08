@@ -1,4 +1,4 @@
-#include "sort.h"
+#include "../inc/sort.h"
 
 /* -------------------------------------------------------------------------------------*/
 /*-----------------------Funkcje sortowania przez scalanie: */
@@ -117,4 +117,6 @@ void BucketSort(Dequeue *S, int N){
             S->InsertEnd(B[i].RemoveFirst());
         }
     }
+    B->Delete();
+    delete B;
 }

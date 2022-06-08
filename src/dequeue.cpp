@@ -1,4 +1,4 @@
-#include "dequeue.h"
+#include "../inc/dequeue.h"
 
 
 Dequeue::Dequeue(){
@@ -82,6 +82,7 @@ Package Dequeue::RemoveFirst(){
   } else {
     Tail = NULL;
   }
+  delete ptr;
   return first;
 }
 
@@ -100,6 +101,7 @@ Package Dequeue::RemoveLast(){
   } else {
     Head = NULL;
   }
+  delete ptr;
   return last;
 }
 
@@ -123,6 +125,7 @@ Package Dequeue::Remove(int n){
     ptr = ptr->Next;
   }
   Package pack = ptr->Next->Elem;
+  Node *del = ptr->Next;    //Zachowuje wskaznik na usuwany element, by moc pozniej zwolnic jego pamiec
   if(ptr->Next->Next == NULL){
     Tail = ptr;
     ptr->Next = NULL;
@@ -130,6 +133,7 @@ Package Dequeue::Remove(int n){
   ptr->Next->Next->Prev = ptr->Next;
   ptr->Next = ptr->Next->Next;
   }
+  delete del;
   return pack;
 }
 
@@ -142,7 +146,7 @@ void Dequeue::Delete(){
 
   while(ptr != NULL){
     next = ptr->Next;
-    free(ptr);
+    delete ptr;
     ptr = next;
   }
 }
@@ -172,7 +176,7 @@ Dequeue &Dequeue::operator = (const Dequeue &other){
   Delete();
 
   Node *tmp = other.GetHead();
- while(tmp->Next != NULL) {
+  while(tmp->Next != NULL) {
     InsertEnd(tmp->Elem);
     tmp = tmp->Next;
   } 
