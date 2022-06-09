@@ -15,6 +15,8 @@ class Dequeue{
 
     Dequeue();
 
+    //~Dequeue() {if(!IsEmpty()) Delete();};
+
     void InsertFront(Package new_pack);
 
     void InsertEnd(Package new_pack);

@@ -54,13 +54,9 @@ void MergeSort(Dequeue *S){
 /* Posortuj S algorytmem quicksort */
 void QuickSort(Dequeue *S){
 
-    srand(time(NULL));
-    int size = S->Size();
-    int p;
     Dequeue L,E,G;
-    if (size > 1){
-        p = rand() % size;      //weż losowy element z S
-        Partition(S,p,&L,&E,&G);
+    if (!S->IsEmpty()){
+        Partition(S,0,&L,&E,&G);
         QuickSort(&L);
         QuickSort(&G);
         Add(S,&L,&E,&G);
@@ -117,6 +113,6 @@ void BucketSort(Dequeue *S, int N){
             S->InsertEnd(B[i].RemoveFirst());
         }
     }
-    B->Delete();
-    delete B;
+    
+    delete[] B;
 }
